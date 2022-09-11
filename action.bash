@@ -33,7 +33,7 @@ push () {
 	test -n "$TAG"
 
 	if [ "$(tr -d '\n' <<<"$DOCKER_HUB_PASSWORD" |wc -c)" -gt 0 ]; then
-		docker login -u icingaadmin --password-stdin <<<"$DOCKER_HUB_PASSWORD"
+		docker login -u herrtxbias --password-stdin <<<"$DOCKER_HUB_PASSWORD"
 		docker push "${TARGET}:$TAG"
 		docker logout
 	fi
