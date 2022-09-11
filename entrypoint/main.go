@@ -5,8 +5,6 @@ package main
 import (
 	"bufio"
 	"fmt"
-	"github.com/otiai10/copy"
-	"golang.org/x/crypto/ssh/terminal"
 	"io/ioutil"
 	"os"
 	"os/exec"
@@ -15,6 +13,9 @@ import (
 	"strings"
 	"syscall"
 	"time"
+
+	"github.com/otiai10/copy"
+	"golang.org/x/crypto/ssh/terminal"
 )
 
 const ca = "/var/lib/icinga2/certs/ca.crt"
@@ -76,9 +77,12 @@ func entrypoint() error {
 								if kv[1] == "1" {
 									nodeSetup = append(nodeSetup, "--"+strings.ReplaceAll(kv[0], "_", "-"))
 								}
-							case "cn", "endpoint", "global_zones", "listen",
+							case "cn", "endpoint", "endpoint2", "global_zones", "listen",
 								"parent_host", "parent_zone", "ticket", "zone":
 								runNodeSetup = true
+								if kv[0] == "endpoint2" {
+									kv[0] = "endpoint"
+								}
 								nodeSetup = append(nodeSetup, "--"+kv[0], kv[1])
 							case "trustedcert":
 								logf(info, "Writing trusted certificate")

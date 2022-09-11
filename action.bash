@@ -2,7 +2,7 @@
 # Icinga 2 Docker image | (c) 2020 Icinga GmbH | GPLv2+
 set -exo pipefail
 
-TARGET=icinga/icinga2
+TARGET=herrtxbias/icinga2
 
 cache () {
 	INPUT_KEY=docker-image/ccache INPUT_PATH=ccache \
@@ -33,7 +33,7 @@ push () {
 	test -n "$TAG"
 
 	if [ "$(tr -d '\n' <<<"$DOCKER_HUB_PASSWORD" |wc -c)" -gt 0 ]; then
-		docker login -u icingaadmin --password-stdin <<<"$DOCKER_HUB_PASSWORD"
+		docker login -u herrtxbias --password-stdin <<<"$DOCKER_HUB_PASSWORD"
 		docker push "${TARGET}:$TAG"
 		docker logout
 	fi

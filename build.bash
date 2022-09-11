@@ -15,14 +15,14 @@ fi
 I2SRC="$(realpath "$I2SRC")"
 BLDCTX="$(realpath "$(dirname "$0")")"
 
-docker build -f "${BLDCTX}/action.Dockerfile" -t icinga/icinga2-builder "$BLDCTX"
+docker build -f "${BLDCTX}/action.Dockerfile" -t herrtxbias/icinga2-builder "$BLDCTX"
 
 docker run --rm -i \
 	-v "${I2SRC}:/i2src:ro" \
 	-v "${BLDCTX}:/bldctx:ro" \
 	-v "$(printf %s ~/.ccache):/root/.ccache" \
 	-v /var/run/docker.sock:/var/run/docker.sock \
-	icinga/icinga2-builder bash <<EOF
+	herrtxbias/icinga2-builder bash <<EOF
 set -exo pipefail
 
 git -C /i2src archive --prefix=i2cp/ HEAD |tar -xC /
@@ -32,6 +32,9 @@ cd /i2cp
 /bldctx/compile.bash
 
 cp -r /entrypoint .
-docker build -f /bldctx/Dockerfile -t icinga/icinga2 .
-docker run --rm icinga/icinga2 icinga2 daemon -C
+docker build -f /bldctx/Dockerfile -t herrtxbias/icinga2 .
+docker run --rm herrtxbias/icinga2 icinga2 daemon -C
+docker login -u herrtxbias --password-stdin <<<"$DOCKER_HUB_PASSWORD"
+docker push herrtxbias/icinga2
+docker logout
 EOF
