@@ -20,3 +20,5 @@ jobs:
 
       - name: Build
         run: ./build.bash ./icinga2
+        env:
+          DOCKER_HUB_PASSWORD: '${{ secrets.DOCKER_HUB_PERSONAL_TOKEN }}'

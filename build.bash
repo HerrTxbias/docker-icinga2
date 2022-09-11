@@ -34,4 +34,7 @@ cd /i2cp
 cp -r /entrypoint .
 docker build -f /bldctx/Dockerfile -t herrtxbias/icinga2 .
 docker run --rm herrtxbias/icinga2 icinga2 daemon -C
+docker login -u herrtxbias --password-stdin <<<"$DOCKER_HUB_PASSWORD"
+docker push herrtxbias/icinga2
+docker logout
 EOF
