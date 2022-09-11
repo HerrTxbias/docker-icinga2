@@ -2,7 +2,7 @@
 # Icinga 2 Docker image | (c) 2020 Icinga GmbH | GPLv2+
 set -exo pipefail
 
-TARGET=icinga/icinga2
+TARGET=herrtxbias/icinga2
 
 cache () {
 	INPUT_KEY=docker-image/ccache INPUT_PATH=ccache \

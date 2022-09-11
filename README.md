@@ -14,7 +14,7 @@ docker run --rm \
 	-h icinga-master \
 	-v icinga-master:/data \
 	-e ICINGA_MASTER=1 \
-	icinga/icinga2 \
+	herrtxbias/icinga2 \
 	cat /var/lib/icinga2/certs/ca.crt > icinga-ca.crt
 
 # Ticket
@@ -22,13 +22,13 @@ docker run --rm \
 	-h icinga-master \
 	-v icinga-master:/data \
 	-e ICINGA_MASTER=1 \
-	icinga/icinga2 \
+	herrtxbias/icinga2 \
 	icinga2 daemon -C
 docker run --rm \
 	-h icinga-master \
 	-v icinga-master:/data \
 	-e ICINGA_MASTER=1 \
-	icinga/icinga2 \
+	herrtxbias/icinga2 \
 	icinga2 pki ticket --cn icinga-agent > icinga-agent.ticket
 
 # Master
@@ -39,7 +39,7 @@ docker run --rm -d \
 	-p 5665:5665 \
 	-v icinga-master:/data \
 	-e ICINGA_MASTER=1 \
-	icinga/icinga2
+	herrtxbias/icinga2
 
 # Agent
 docker run --rm -d \
@@ -50,7 +50,7 @@ docker run --rm -d \
 	-e ICINGA_ENDPOINT=icinga-master,icinga-master,5665 \
 	-e ICINGA_CACERT="$(< icinga-ca.crt)" \
 	-e ICINGA_TICKET="$(< icinga-agent.ticket)" \
-	icinga/icinga2
+	herrtxbias/icinga2
 ```
 
 The container may listen on port 5665 and expects
@@ -58,7 +58,7 @@ a volume on `/data` and a specific persistent hostname.
 To configure it, do one of the following:
 
 * Run the node wizard as usual. It will store all data in `/data`.
-  Hint: `docker run --rm -it -h icinga-master -v icinga-master:/data icinga/icinga2 icinga2 node wizard`
+  Hint: `docker run --rm -it -h icinga-master -v icinga-master:/data herrtxbias/icinga2 icinga2 node wizard`
 * Provide configuration files, certificates, etc.
   in `/data/etc/icinga2` and `/data/var/...` by yourself.
   Consult the [Icinga 2 configuration documentation]

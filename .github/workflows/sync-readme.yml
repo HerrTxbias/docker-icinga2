@@ -17,7 +17,7 @@ jobs:
       - name: Sync README
         uses: ms-jpq/sync-dockerhub-readme@e2991ea1ba48832e73555cdbd5b82f5a2e91ee9b # v1
         with:
-          username: icingaadmin
+          username: herrtxbias
           password: '${{ secrets.DOCKER_HUB_PERSONAL_TOKEN }}'
-          repository: icinga/icinga2
+          repository: herrtxbias/icinga2
           readme: ./README.md
